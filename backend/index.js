@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-
+import userRoute from "./routes/user.route.js";
 import connectDB from "./utils/db.js";
 
 dotenv.config();
@@ -29,6 +29,8 @@ app.get("/home", (_req, res) => {
     success: true,
   });
 });
+
+app.use("/api/v1/user", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Máy chủ đang chạy trên cổng ${PORT}`);
