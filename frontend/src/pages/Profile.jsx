@@ -1,12 +1,15 @@
 import { FileText, Mail, Pen, Phone } from "lucide-react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import AppliedJobTable from "@/components/shared/AppliedJobTable";
+import UpdateProfileDialog from "@/components/shared/UpdateProfileDialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { APPLIED_JOBS } from "@/utils/constant";
 
 function Profile() {
   const { user } = useSelector((store) => store.auth);
+  const [open, setOpen] = useState(false);
 
   const skills = user?.profile?.skills || [];
   const resume = user?.profile?.resume;
@@ -39,6 +42,7 @@ function Profile() {
           </div>
           <button
             className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+            onClick={() => setOpen(true)}
             type="button"
           >
             <Pen className="h-5 w-5" />
@@ -99,6 +103,8 @@ function Profile() {
         <h1 className="font-bold text-lg mb-4">Công việc đã ứng tuyển</h1>
         <AppliedJobTable jobs={appliedJobs} />
       </div>
+
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
 }
