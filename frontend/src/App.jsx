@@ -1,11 +1,19 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Button } from "./components/ui/button";
+import Navbar from "./components/shared/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Button>Button</Button>
+    <div className="bg-background min-h-screen">
+      <Navbar />
+      <Routes>
+        <Route element={<Home />} path="/" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<Signup />} path="/signup" />
+      </Routes>
     </div>
   );
 }
