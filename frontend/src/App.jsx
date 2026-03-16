@@ -5,6 +5,7 @@ import Browse from "./pages/Browse";
 import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route element={<Signup />} path="/signup" />
         <Route element={<Jobs />} path="/jobs" />
         <Route element={<Browse />} path="/browse" />
+        <Route element={<Profile />} path="/profile" />
       </Routes>
     </div>
   );

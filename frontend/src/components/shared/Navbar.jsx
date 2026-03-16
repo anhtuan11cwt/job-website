@@ -1,5 +1,5 @@
 import { LogOut, User2 } from "lucide-react";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -8,9 +8,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { setUser } from "@/redux/authSlice";
 
 function Navbar() {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth);
 
   const navLinks = [
     { href: "/", name: "Trang chủ" },
@@ -62,9 +64,12 @@ function Navbar() {
                     variant="ghost"
                   >
                     <Avatar>
-                      <AvatarImage alt={user.name} src={user.photoUrl} />
+                      <AvatarImage
+                        alt={user?.fullname}
+                        src={user?.profile?.profilePhoto}
+                      />
                       <AvatarFallback>
-                        {user.name?.charAt(0) || "U"}
+                        {user?.fullname?.charAt(0) || "U"}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -72,14 +77,17 @@ function Navbar() {
                 <PopoverContent align="end" className="w-88">
                   <div className="flex items-center gap-3 p-2">
                     <Avatar>
-                      <AvatarImage alt={user.name} src={user.photoUrl} />
+                      <AvatarImage
+                        alt={user?.fullname}
+                        src={user?.profile?.profilePhoto}
+                      />
                       <AvatarFallback>
-                        {user.name?.charAt(0) || "U"}
+                        {user?.fullname?.charAt(0) || "U"}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <h4 className="font-medium">
-                        {user.name || "Người dùng"}
+                        {user.fullname || "Người dùng"}
                       </h4>
                       <p className="text-muted-foreground text-sm">
                         {user.email || "user@example.com"}
@@ -99,7 +107,7 @@ function Navbar() {
                     </Button>
                     <Button
                       className="justify-start gap-2 w-full text-destructive hover:text-destructive"
-                      onClick={() => setUser(null)}
+                      onClick={() => dispatch(setUser(null))}
                       variant="ghost"
                     >
                       <LogOut className="size-4" />

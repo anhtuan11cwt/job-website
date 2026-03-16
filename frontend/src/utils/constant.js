@@ -194,3 +194,27 @@ export const ALL_JOBS = [
     title: "Kỹ sư Backend (Senior)",
   },
 ];
+
+export const APPLIED_JOBS = [
+  {
+    company: "Microsoft",
+    date: "27-12-2024",
+    id: 1,
+    jobRole: "Lập trình viên Front-end",
+    status: "Selected",
+  },
+  {
+    company: "Google",
+    date: "26-12-2024",
+    id: 2,
+    jobRole: "Lập trình viên Fullstack",
+    status: "Pending",
+  },
+  {
+    company: "Facebook",
+    date: "25-12-2024",
+    id: 3,
+    jobRole: "Lập trình viên React Native",
+    status: "Rejected",
+  },
+];
