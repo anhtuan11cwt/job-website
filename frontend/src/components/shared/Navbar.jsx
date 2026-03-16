@@ -1,6 +1,8 @@
+import axios from "axios";
 import { LogOut, User2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +11,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { setUser } from "@/redux/authSlice";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
 
   const navLinks = [
@@ -19,6 +23,24 @@ function Navbar() {
     { href: "/jobs", name: "Việc làm" },
     { href: "/browse", name: "Tìm việc" },
   ];
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error.response?.data?.message || "Đăng xuất không thành công",
+      );
+    }
+  };
 
   return (
     <nav className="bg-white border-border border-b">
@@ -107,7 +129,7 @@ function Navbar() {
                     </Button>
                     <Button
                       className="justify-start gap-2 w-full text-destructive hover:text-destructive"
-                      onClick={() => dispatch(setUser(null))}
+                      onClick={logoutHandler}
                       variant="ghost"
                     >
                       <LogOut className="size-4" />

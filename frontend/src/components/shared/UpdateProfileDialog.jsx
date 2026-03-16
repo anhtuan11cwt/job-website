@@ -25,9 +25,10 @@ function UpdateProfileDialog({ open, setOpen }) {
   const [input, setInput] = useState({
     bio: user?.profile?.bio || "",
     email: user?.email || "",
-    file: null,
     fullname: user?.fullname || "",
-    phoneNumber: user?.profile?.phoneNumber || "",
+    phoneNumber: user?.phoneNumber || "",
+    profilePhoto: null,
+    resume: null,
     skills: user?.profile?.skills?.join(", ") || "",
   });
 
@@ -36,10 +37,17 @@ function UpdateProfileDialog({ open, setOpen }) {
     setInput({ ...input, [name]: value });
   };
 
-  const fileChangeHandler = (e) => {
+  const profilePhotoChangeHandler = (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      setInput({ ...input, file });
+      setInput({ ...input, profilePhoto: file });
+    }
+  };
+
+  const resumeChangeHandler = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setInput({ ...input, resume: file });
     }
   };
 
@@ -47,34 +55,42 @@ function UpdateProfileDialog({ open, setOpen }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload = {};
+      const formData = new FormData();
 
       if (input.fullname && input.fullname !== user?.fullname) {
-        payload.fullname = input.fullname;
+        formData.append("fullname", input.fullname);
       }
       if (input.email && input.email !== user?.email) {
-        payload.email = input.email;
+        formData.append("email", input.email);
       }
       if (
         input.phoneNumber &&
         input.phoneNumber !== String(user?.phoneNumber ?? "")
       ) {
-        payload.phoneNumber = input.phoneNumber;
+        formData.append("phoneNumber", input.phoneNumber);
       }
-      const originalSkills = (user?.profile?.skills || []).join(", ");
       if (input.bio && input.bio !== user?.profile?.bio) {
-        payload.bio = input.bio;
+        formData.append("bio", input.bio);
       }
-      if (input.skills && input.skills !== originalSkills) {
-        payload.skills = input.skills;
+      if (
+        input.skills &&
+        input.skills !== (user?.profile?.skills || []).join(", ")
+      ) {
+        formData.append("skills", input.skills);
+      }
+      if (input.profilePhoto) {
+        formData.append("profilePhoto", input.profilePhoto);
+      }
+      if (input.resume) {
+        formData.append("resume", input.resume);
       }
 
       const res = await axios.post(
         `${USER_API_END_POINT}/profile/update`,
-        payload,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         },
@@ -174,6 +190,19 @@ function UpdateProfileDialog({ open, setOpen }) {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right" htmlFor="profilePhoto">
+                Ảnh đại diện
+              </Label>
+              <Input
+                accept="image/*"
+                className="col-span-3"
+                id="profilePhoto"
+                name="profilePhoto"
+                onChange={profilePhotoChangeHandler}
+                type="file"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right" htmlFor="resume">
                 Sơ yếu lý lịch
               </Label>
@@ -182,7 +211,7 @@ function UpdateProfileDialog({ open, setOpen }) {
                 className="col-span-3"
                 id="resume"
                 name="resume"
-                onChange={fileChangeHandler}
+                onChange={resumeChangeHandler}
                 type="file"
               />
             </div>
