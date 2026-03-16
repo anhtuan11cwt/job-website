@@ -1,25 +1,7 @@
 import { Filter } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-const filterData = [
-  {
-    array: ["Hà Nội", "TP. HCM", "Đà Nẵng", "Cần Thơ"],
-    filterType: "Địa điểm",
-  },
-  {
-    array: [
-      "Phát triển Front-end",
-      "Phát triển Back-end",
-      "Lập trình viên Fullstack",
-    ],
-    filterType: "Ngành nghề",
-  },
-  {
-    array: ["0-10 triệu", "10-25 triệu", "25-50 triệu", "Trên 50 triệu"],
-    filterType: "Mức lương",
-  },
-];
+import { FILTER_DATA } from "@/utils/constant";
 
 function FilterCard() {
   return (
@@ -30,7 +12,7 @@ function FilterCard() {
       </div>
       <hr className="mb-4 border-gray-100" />
       <div className="space-y-4">
-        {filterData.map((filter) => (
+        {FILTER_DATA.map((filter) => (
           <div key={filter.filterType}>
             <h2 className="font-semibold text-sm mb-3 text-gray-700">
               {filter.filterType}

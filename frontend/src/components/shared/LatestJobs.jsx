@@ -1,70 +1,5 @@
+import { LATEST_JOBS } from "@/utils/constant";
 import LatestJobCards from "./LatestJobCards";
-
-const jobs = [
-  {
-    company: "FPT Software",
-    description:
-      "Chúng tôi đang tìm kiếm một Nhà phát triển Frontend lành nghề gia nhập đội ngũ.",
-    id: 1,
-    jobType: "Bán thời gian",
-    location: "Hà Nội",
-    positions: 12,
-    salary: "15 - 20 Triệu",
-    title: "Nhà phát triển Frontend",
-  },
-  {
-    company: "VNG Corporation",
-    description:
-      "Gia nhập đội ngũ backend của chúng tôi để xây dựng các ứng dụng mở rộng.",
-    id: 2,
-    jobType: "Toàn thời gian",
-    location: "TP. Hồ Chí Minh",
-    positions: 5,
-    salary: "20 - 35 Triệu",
-    title: "Nhà phát triển Backend",
-  },
-  {
-    company: "Viettel Group",
-    description: "Làm việc trên các dự án AI và ML tiên tiến.",
-    id: 3,
-    jobType: "Toàn thời gian",
-    location: "Hà Nội",
-    positions: 8,
-    salary: "30 - 50 Triệu",
-    title: "Khoa học dữ liệu",
-  },
-  {
-    company: "Shopee Vietnam",
-    description:
-      "Sáng tạo những thiết kế hình ảnh ấn tượng cho khách hàng của chúng tôi.",
-    id: 4,
-    jobType: "Bán thời gian",
-    location: "Đà Nẵng",
-    positions: 3,
-    salary: "10 - 15 Triệu",
-    title: "Thiết kế đồ họa",
-  },
-  {
-    company: "Momo (M-Service)",
-    description: "Xây dựng các ứng dụng web toàn diện.",
-    id: 5,
-    jobType: "Toàn thời gian",
-    location: "TP. Hồ Chí Minh",
-    positions: 10,
-    salary: "25 - 40 Triệu",
-    title: "Nhà phát triển Fullstack",
-  },
-  {
-    company: "Tiki.vn",
-    description: "Quản lý cơ sở hạ tầng đám mây và quy trình CI/CD.",
-    id: 6,
-    jobType: "Toàn thời gian",
-    location: "Hà Nội",
-    positions: 6,
-    salary: "20 - 30 Triệu",
-    title: "Kỹ sư DevOps",
-  },
-];
 
 function LatestJobs() {
   return (
@@ -74,7 +9,7 @@ function LatestJobs() {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {jobs.slice(0, 6).map((job) => (
+        {LATEST_JOBS.slice(0, 6).map((job) => (
           <LatestJobCards job={job} key={job.id} />
         ))}
       </div>
