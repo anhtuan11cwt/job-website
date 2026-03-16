@@ -38,6 +38,23 @@ function Profile() {
               <p className="text-gray-500 text-sm mt-1">
                 {user?.profile?.bio || "Chưa cập nhật tiểu sử"}
               </p>
+              {user?.role && (
+                <p className="text-gray-500 text-xs mt-1">
+                  Vai trò:{" "}
+                  <span className="font-medium">
+                    {user.role === "student"
+                      ? "Ứng viên"
+                      : user.role === "recruiter"
+                        ? "Nhà tuyển dụng"
+                        : user.role}
+                  </span>
+                </p>
+              )}
+              {user?._id && (
+                <p className="text-gray-400 text-[11px] mt-1 select-all">
+                  ID: {user._id}
+                </p>
+              )}
             </div>
           </div>
           <button
@@ -59,7 +76,7 @@ function Profile() {
           <div className="flex items-center gap-2 text-gray-600">
             <Phone className="h-4 w-4" />
             <span className="text-sm">
-              {user?.profile?.phoneNumber || "Chưa cập nhật số điện thoại"}
+              {user?.phoneNumber || "Chưa cập nhật số điện thoại"}
             </span>
           </div>
         </div>

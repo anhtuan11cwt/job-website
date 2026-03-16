@@ -1,5 +1,8 @@
+import axios from "axios";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,9 +15,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { setUser } from "@/redux/authSlice";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 function UpdateProfileDialog({ open, setOpen }) {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     bio: user?.profile?.bio || "",
     email: user?.email || "",
@@ -29,31 +36,69 @@ function UpdateProfileDialog({ open, setOpen }) {
     setInput({ ...input, [name]: value });
   };
 
-  const fileEventHandler = (e) => {
+  const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       setInput({ ...input, file });
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("fullname", input.fullname);
-    formData.append("email", input.email);
-    formData.append("phoneNumber", input.phoneNumber);
-    formData.append("bio", input.bio);
-    formData.append("skills", input.skills);
-    if (input.file) {
-      formData.append("resume", input.file);
+    setLoading(true);
+    try {
+      const payload = {};
+
+      if (input.fullname && input.fullname !== user?.fullname) {
+        payload.fullname = input.fullname;
+      }
+      if (input.email && input.email !== user?.email) {
+        payload.email = input.email;
+      }
+      if (
+        input.phoneNumber &&
+        input.phoneNumber !== String(user?.phoneNumber ?? "")
+      ) {
+        payload.phoneNumber = input.phoneNumber;
+      }
+      const originalSkills = (user?.profile?.skills || []).join(", ");
+      if (input.bio && input.bio !== user?.profile?.bio) {
+        payload.bio = input.bio;
+      }
+      if (input.skills && input.skills !== originalSkills) {
+        payload.skills = input.skills;
+      }
+
+      const res = await axios.post(
+        `${USER_API_END_POINT}/profile/update`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        },
+      );
+      if (res.data.success) {
+        dispatch(setUser(res.data.user));
+        toast.success("Cập nhật hồ sơ thành công");
+        setOpen(false);
+      }
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Cập nhật hồ sơ không thành công",
+      );
+    } finally {
+      setLoading(false);
     }
-    console.log("Form Data:", Object.fromEntries(formData));
-    setOpen(false);
   };
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent
+        className="sm:max-w-[525px]"
+        onInteractOutside={(event) => event.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Cập nhật hồ sơ</DialogTitle>
           <DialogDescription>
@@ -137,7 +182,7 @@ function UpdateProfileDialog({ open, setOpen }) {
                 className="col-span-3"
                 id="resume"
                 name="resume"
-                onChange={fileEventHandler}
+                onChange={fileChangeHandler}
                 type="file"
               />
             </div>
@@ -150,7 +195,16 @@ function UpdateProfileDialog({ open, setOpen }) {
             >
               Hủy
             </Button>
-            <Button type="submit">Cập nhật</Button>
+            <Button disabled={loading} type="submit">
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Vui lòng đợi
+                </>
+              ) : (
+                "Cập nhật"
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
