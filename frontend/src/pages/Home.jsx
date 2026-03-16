@@ -1,9 +1,15 @@
+import CategoryCarousel from "@/components/shared/CategoryCarousel";
+import Footer from "@/components/shared/Footer";
+import HeroSection from "@/components/shared/HeroSection";
+import LatestJobs from "@/components/shared/LatestJobs";
+
 function Home() {
   return (
-    <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
-      <h1 className="font-bold text-3xl">
-        Chào mừng đến với Cổng thông tin việc làm
-      </h1>
+    <div className="min-h-screen flex flex-col">
+      <HeroSection />
+      <CategoryCarousel />
+      <LatestJobs />
+      <Footer />
     </div>
   );
 }
