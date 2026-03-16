@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/shared/Navbar";
 import Browse from "./pages/Browse";
 import Home from "./pages/Home";
+import JobDescription from "./pages/JobDescription";
 import Jobs from "./pages/Jobs";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
@@ -19,6 +20,7 @@ function App() {
         <Route element={<Jobs />} path="/jobs" />
         <Route element={<Browse />} path="/browse" />
         <Route element={<Profile />} path="/profile" />
+        <Route element={<JobDescription />} path="/description/:id" />
       </Routes>
     </div>
   );

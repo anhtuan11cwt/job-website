@@ -1,9 +1,16 @@
 import { Banknote, Bookmark, Briefcase, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 function Job({ job }) {
+  const navigate = useNavigate();
+
+  const handleDetailsClick = () => {
+    navigate(`/description/${job.id}`);
+  };
+
   return (
     <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-xl transition-all cursor-pointer">
       <div className="flex items-start justify-between mb-4">
@@ -56,7 +63,10 @@ function Job({ job }) {
       </div>
 
       <div className="flex gap-3">
-        <Button className="flex-1 bg-[#7209b7] hover:bg-[#5a06a0] cursor-pointer">
+        <Button
+          className="flex-1 bg-[#7209b7] hover:bg-[#5a06a0] cursor-pointer"
+          onClick={handleDetailsClick}
+        >
           Chi tiết
         </Button>
         <Button className="flex-1 cursor-pointer" variant="outline">

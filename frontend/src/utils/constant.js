@@ -102,6 +102,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=TI",
     description:
       "Chúng tôi đang tìm kiếm một Lập trình viên Front-end có kinh nghiệm để gia nhập đội ngũ năng động. Bạn sẽ chịu trách nhiệm xây dựng các ứng dụng web chất lượng cao.",
+    id: 7,
     jobType: "Toàn thời gian",
     location: "Hà Nội",
     positions: 3,
@@ -114,6 +115,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=DT",
     description:
       "Gia nhập đội ngũ của chúng tôi để xây dựng hệ thống backend và API có khả năng mở rộng cho các khách hàng doanh nghiệp.",
+    id: 8,
     jobType: "Toàn thời gian",
     location: "Đà Nẵng",
     positions: 2,
@@ -126,6 +128,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=WC",
     description:
       "Tìm kiếm một Lập trình viên Fullstack tài năng để làm việc trong các dự án thú vị cho các khách hàng toàn cầu của chúng tôi.",
+    id: 9,
     jobType: "Toàn thời gian",
     location: "TP. HCM",
     positions: 5,
@@ -138,6 +141,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=C9",
     description:
       "Xây dựng các ứng dụng di động đa nền tảng và làm việc với các công nghệ tiên tiến nhất.",
+    id: 10,
     jobType: "Toàn thời gian",
     location: "TP. HCM",
     positions: 4,
@@ -150,6 +154,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=DD",
     description:
       "Tạo ra các giao diện người dùng đẹp và phản hồi nhanh cho các ứng dụng web của chúng tôi.",
+    id: 11,
     jobType: "Bán thời gian",
     location: "Hải Phòng",
     positions: 2,
@@ -162,6 +167,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=CM",
     description:
       "Thiết kế và triển khai các giải pháp backend hiệu quả bằng Node.js và các framework hiện đại.",
+    id: 12,
     jobType: "Toàn thời gian",
     location: "Hà Nội",
     positions: 3,
@@ -174,6 +180,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=SH",
     description:
       "Cơ hội tuyệt vời cho các bạn mới ra trường để học hỏi và phát triển trong môi trường startup năng động.",
+    id: 13,
     jobType: "Toàn thời gian",
     location: "Cần Thơ",
     positions: 10,
@@ -186,6 +193,7 @@ export const ALL_JOBS = [
     companyLogo: "https://api.dicebear.com/7.x/initials/svg?seed=TG",
     description:
       "Dẫn dắt kiến trúc backend và cố vấn cho các lập trình viên trẻ trong đội ngũ kỹ thuật của chúng tôi.",
+    id: 14,
     jobType: "Toàn thời gian",
     location: "Đà Nẵng",
     positions: 1,
