@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/utils/utils";
 
 function Job({ job }) {
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    navigate(`/description/${job.id}`);
+    const jobId = job._id || job.id;
+    if (jobId) {
+      navigate(`/description/${jobId}`);
+    }
   };
 
   return (
@@ -16,13 +20,18 @@ function Job({ job }) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           <Avatar className="w-12 h-12">
-            <AvatarImage alt={job.company} src={job.companyLogo} />
+            <AvatarImage
+              alt={job.company?.name || job.company}
+              src={job.company?.logo || job.companyLogo}
+            />
             <AvatarFallback className="bg-gray-100 text-gray-600 font-semibold">
-              {job.company?.charAt(0) || "C"}
+              {(job.company?.name || job.company || "C")?.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-semibold text-lg">{job.company}</h3>
+            <h3 className="font-semibold text-lg">
+              {job.company?.name || job.company}
+            </h3>
             <div className="flex items-center text-gray-500 text-sm mt-0.5">
               <MapPin className="w-3.5 h-3.5 mr-1" />
               {job.location}
@@ -45,7 +54,7 @@ function Job({ job }) {
           variant="ghost"
         >
           <Briefcase className="w-3.5 h-3.5 mr-1" />
-          {job.positions} Vị trí
+          {job.position} Vị trí
         </Badge>
         <Badge
           className="text-red-600 bg-red-50 hover:bg-red-100"
@@ -58,7 +67,7 @@ function Job({ job }) {
           variant="ghost"
         >
           <Banknote className="w-3.5 h-3.5 mr-0.5" />
-          {job.salary}
+          {formatCurrency(job.salary)}
         </Badge>
       </div>
 

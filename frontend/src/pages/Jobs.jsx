@@ -1,8 +1,13 @@
+import { useSelector } from "react-redux";
 import FilterCard from "@/components/shared/FilterCard";
 import Job from "@/components/shared/Job";
-import { ALL_JOBS } from "@/utils/constant";
+import useGetAllJobs from "@/hooks/useGetAllJobs";
 
 function Jobs() {
+  useGetAllJobs();
+
+  const { allJobs } = useSelector((store) => store.job);
+
   return (
     <div className="max-w-7xl mx-auto mt-5 px-4">
       <div className="flex gap-6">
@@ -14,7 +19,7 @@ function Jobs() {
 
         <div className="w-full md:w-4/5">
           <div className="h-[88vh] overflow-y-auto pr-2 scrollbar-hide">
-            {ALL_JOBS.length <= 0 ? (
+            {allJobs.length <= 0 ? (
               <div className="flex flex-col items-center justify-center h-96">
                 <p className="text-gray-500 text-lg">
                   Không tìm thấy công việc nào
@@ -25,8 +30,8 @@ function Jobs() {
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-4">
-                {ALL_JOBS.map((job) => (
-                  <Job job={job} key={`${job.company}-${job.title}`} />
+                {allJobs.map((job) => (
+                  <Job job={job} key={job._id} />
                 ))}
               </div>
             )}

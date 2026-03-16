@@ -28,7 +28,7 @@ function LatestJobCards({ job }) {
           className="text-blue-700 bg-blue-50 hover:bg-blue-100"
           variant="ghost"
         >
-          {job?.positions} Vị trí
+          {job?.position} Vị trí
         </Badge>
         <Badge
           className="text-red-600 bg-red-50 hover:bg-red-100"
