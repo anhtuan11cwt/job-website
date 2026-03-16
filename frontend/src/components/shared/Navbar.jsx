@@ -46,12 +46,12 @@ function Navbar() {
           <div className="flex items-center gap-3">
             {!user ? (
               <>
-                <Button asChild variant="ghost">
-                  <Link to="/login">Đăng nhập</Link>
-                </Button>
-                <Button asChild>
-                  <Link to="/signup">Đăng ký</Link>
-                </Button>
+                <Link to="/login">
+                  <Button variant="ghost">Đăng nhập</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button>Đăng ký</Button>
+                </Link>
               </>
             ) : (
               <Popover>

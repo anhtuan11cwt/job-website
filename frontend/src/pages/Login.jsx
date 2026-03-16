@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setLoading } from "@/redux/authSlice";
 import { USER_API_END_POINT } from "@/utils/constant";
 
 function Login() {
@@ -25,6 +27,8 @@ function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -32,6 +36,7 @@ function Login() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     try {
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
@@ -47,6 +52,8 @@ function Login() {
       toast.error(
         error.response?.data?.message || "Đăng nhập không thành công",
       );
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -124,8 +131,15 @@ function Login() {
                 </div>
               </RadioGroup>
             </div>
-            <Button className="w-full" type="submit">
-              Đăng nhập
+            <Button className="w-full" disabled={loading} type="submit">
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Vui lòng đợi
+                </>
+              ) : (
+                "Đăng nhập"
+              )}
             </Button>
           </form>
           <div className="mt-4 text-sm text-center">

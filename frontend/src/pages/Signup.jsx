@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setLoading } from "@/redux/authSlice";
 import { USER_API_END_POINT } from "@/utils/constant";
 
 function Signup() {
@@ -28,6 +30,8 @@ function Signup() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -42,29 +46,28 @@ function Signup() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("fullname", input.fullname);
-    formData.append("email", input.email);
-    formData.append("phoneNumber", input.phoneNumber);
-    formData.append("password", input.password);
-    formData.append("role", input.role);
-    if (input.file) {
-      formData.append("file", input.file);
-    }
+    dispatch(setLoading(true));
 
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const res = await axios.post(
+        `${USER_API_END_POINT}/register`,
+        {
+          email: input.email,
+          fullname: input.fullname,
+          password: input.password,
+          phoneNumber: input.phoneNumber,
+          role: input.role,
         },
-        withCredentials: true,
-      });
+        { withCredentials: true },
+      );
       if (res.data.success) {
         navigate("/login");
         toast.success(res.data.message);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Đăng ký không thành công");
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -175,8 +178,15 @@ function Signup() {
                 type="file"
               />
             </div>
-            <Button className="w-full" type="submit">
-              Đăng ký
+            <Button className="w-full" disabled={loading} type="submit">
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Vui lòng đợi
+                </>
+              ) : (
+                "Đăng ký"
+              )}
             </Button>
           </form>
           <div className="mt-4 text-sm text-center">
