@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminJobs from "@/components/admin/AdminJobs";
+import Applicants from "@/components/admin/Applicants";
 import Companies from "@/components/admin/Companies";
 import CompanyCreate from "@/components/admin/CompanyCreate";
 import CompanySetup from "@/components/admin/CompanySetup";
@@ -31,6 +32,7 @@ function App() {
         <Route element={<CompanySetup />} path="/admin/companies/:id" />
         <Route element={<AdminJobs />} path="/admin/jobs" />
         <Route element={<PostJob />} path="/admin/jobs/create" />
+        <Route element={<Applicants />} path="/admin/jobs/:id/applicants" />
       </Routes>
     </div>
   );
