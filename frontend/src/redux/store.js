@@ -10,6 +10,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/es/storage";
+import applicationReducer from "./applicationSlice";
 import authReducer from "./authSlice";
 import companyReducer from "./companySlice";
 import jobReducer from "./jobSlice";
@@ -20,6 +21,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  application: applicationReducer,
   auth: authReducer,
   company: companyReducer,
   job: jobReducer,

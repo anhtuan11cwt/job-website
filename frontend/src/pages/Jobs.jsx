@@ -6,7 +6,7 @@ import useGetAllJobs from "@/hooks/useGetAllJobs";
 function Jobs() {
   useGetAllJobs();
 
-  const { allJobs } = useSelector((store) => store.job);
+  const { filterdJobs } = useSelector((store) => store.job);
 
   return (
     <div className="max-w-7xl mx-auto mt-5 px-4">
@@ -19,7 +19,7 @@ function Jobs() {
 
         <div className="w-full md:w-4/5">
           <div className="h-[88vh] overflow-y-auto pr-2 scrollbar-hide">
-            {allJobs.length <= 0 ? (
+            {filterdJobs.length <= 0 ? (
               <div className="flex flex-col items-center justify-center h-96">
                 <p className="text-gray-500 text-lg">
                   Không tìm thấy công việc nào
@@ -30,7 +30,7 @@ function Jobs() {
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-4">
-                {allJobs.map((job) => (
+                {filterdJobs.map((job) => (
                   <Job job={job} key={job._id} />
                 ))}
               </div>

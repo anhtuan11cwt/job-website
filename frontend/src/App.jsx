@@ -6,7 +6,9 @@ import Companies from "@/components/admin/Companies";
 import CompanyCreate from "@/components/admin/CompanyCreate";
 import CompanySetup from "@/components/admin/CompanySetup";
 import PostJob from "@/components/admin/PostJob";
+import AuthRoute from "@/components/shared/AuthRoute";
 import Navbar from "@/components/shared/Navbar";
+import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import Browse from "./pages/Browse";
 import Home from "./pages/Home";
 import JobDescription from "./pages/JobDescription";
@@ -21,18 +23,81 @@ function App() {
       <Navbar />
       <Routes>
         <Route element={<Home />} path="/" />
-        <Route element={<Login />} path="/login" />
-        <Route element={<Signup />} path="/signup" />
+        <Route
+          element={
+            <AuthRoute>
+              <Login />
+            </AuthRoute>
+          }
+          path="/login"
+        />
+        <Route
+          element={
+            <AuthRoute>
+              <Signup />
+            </AuthRoute>
+          }
+          path="/signup"
+        />
         <Route element={<Jobs />} path="/jobs" />
         <Route element={<Browse />} path="/browse" />
-        <Route element={<Profile />} path="/profile" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+          path="/profile"
+        />
         <Route element={<JobDescription />} path="/description/:id" />
-        <Route element={<Companies />} path="/admin/companies" />
-        <Route element={<CompanyCreate />} path="/admin/companies/create" />
-        <Route element={<CompanySetup />} path="/admin/companies/:id" />
-        <Route element={<AdminJobs />} path="/admin/jobs" />
-        <Route element={<PostJob />} path="/admin/jobs/create" />
-        <Route element={<Applicants />} path="/admin/jobs/:id/applicants" />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <Companies />
+            </ProtectedRoute>
+          }
+          path="/admin/companies"
+        />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <CompanyCreate />
+            </ProtectedRoute>
+          }
+          path="/admin/companies/create"
+        />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <CompanySetup />
+            </ProtectedRoute>
+          }
+          path="/admin/companies/:id"
+        />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <AdminJobs />
+            </ProtectedRoute>
+          }
+          path="/admin/jobs"
+        />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <PostJob />
+            </ProtectedRoute>
+          }
+          path="/admin/jobs/create"
+        />
+        <Route
+          element={
+            <ProtectedRoute requireRecruiter>
+              <Applicants />
+            </ProtectedRoute>
+          }
+          path="/admin/jobs/:id/applicants"
+        />
       </Routes>
     </div>
   );

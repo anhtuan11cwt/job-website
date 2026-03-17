@@ -1,8 +1,27 @@
 import { Search } from "lucide-react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { setSearchJobByText } from "@/redux/jobSlice";
 
 function HeroSection() {
+  const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const searchJobHandler = () => {
+    dispatch(setSearchJobByText(keyword));
+    navigate("/browse");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      searchJobHandler();
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-purple-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -27,10 +46,16 @@ function HeroSection() {
             <div className="flex items-center bg-white shadow-lg border border-gray-100 rounded-full p-2">
               <Input
                 className="border-none outline-none shadow-none focus-visible:ring-0 text-base pl-4"
+                onChange={(e) => setKeyword(e.target.value)}
+                onKeyDown={handleKeyPress}
                 placeholder="Tìm kiếm công việc mơ ước của bạn ngay..."
                 type="text"
+                value={keyword}
               />
-              <Button className="rounded-full bg-[#6A38C2] hover:bg-[#5a2fa8] px-8">
+              <Button
+                className="rounded-full bg-[#6A38C2] hover:bg-[#5a2fa8] px-8"
+                onClick={searchJobHandler}
+              >
                 <Search className="mr-2 h-4 w-4" />
                 Tìm kiếm
               </Button>

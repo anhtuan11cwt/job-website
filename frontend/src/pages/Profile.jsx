@@ -5,17 +5,43 @@ import AppliedJobTable from "@/components/shared/AppliedJobTable";
 import UpdateProfileDialog from "@/components/shared/UpdateProfileDialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { APPLIED_JOBS } from "@/utils/constant";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 function Profile() {
   const { user } = useSelector((store) => store.auth);
+  const { allAppliedJobs = [] } = useSelector((store) => store.job);
   const [open, setOpen] = useState(false);
+
+  useGetAppliedJobs();
 
   const skills = user?.profile?.skills || [];
   const resume = user?.profile?.resume;
   const resumeOriginalName = user?.profile?.resumeOriginalName;
 
-  const appliedJobs = APPLIED_JOBS;
+  const _getStatusBadge = (status) => {
+    switch (status) {
+      case "accepted":
+        return (
+          <Badge className="bg-green-500 hover:bg-green-600">
+            Đã chấp nhận
+          </Badge>
+        );
+      case "rejected":
+        return <Badge variant="destructive">Đã từ chối</Badge>;
+      default:
+        return <Badge variant="secondary">Đang chờ</Badge>;
+    }
+  };
+
+  const formatAppliedJobs = allAppliedJobs.map((application) => ({
+    company: application.job?.company?.name || "Không xác định",
+    date: application.createdAt
+      ? new Date(application.createdAt).toLocaleDateString("vi-VN")
+      : "-",
+    id: application._id,
+    jobRole: application.job?.title || "Không xác định",
+    status: application.status || "pending",
+  }));
 
   return (
     <div className="max-w-6xl mx-auto my-10 p-4">
@@ -118,7 +144,13 @@ function Profile() {
 
       <div className="max-w-4xl mx-auto mt-8">
         <h1 className="font-bold text-lg mb-4">Công việc đã ứng tuyển</h1>
-        <AppliedJobTable jobs={appliedJobs} />
+        {formatAppliedJobs.length > 0 ? (
+          <AppliedJobTable jobs={formatAppliedJobs} />
+        ) : (
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+            <p className="text-gray-500">Bạn chưa ứng tuyển công việc nào.</p>
+          </div>
+        )}
       </div>
 
       <UpdateProfileDialog open={open} setOpen={setOpen} />

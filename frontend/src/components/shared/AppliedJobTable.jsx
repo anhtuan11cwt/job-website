@@ -3,14 +3,23 @@ import { Badge } from "@/components/ui/badge";
 function AppliedJobTable({ jobs }) {
   const getStatusVariant = (status) => {
     switch (status) {
-      case "Selected":
+      case "accepted":
         return "default";
-      case "Pending":
-        return "secondary";
-      case "Rejected":
+      case "rejected":
         return "destructive";
       default:
-        return "outline";
+        return "secondary";
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case "accepted":
+        return "Đã chấp nhận";
+      case "rejected":
+        return "Đã từ chối";
+      default:
+        return "Đang chờ";
     }
   };
 
@@ -47,11 +56,7 @@ function AppliedJobTable({ jobs }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right">
                 <Badge variant={getStatusVariant(job.status)}>
-                  {job.status === "Selected"
-                    ? "Đã chọn"
-                    : job.status === "Pending"
-                      ? "Đang chờ"
-                      : "Bị từ chối"}
+                  {getStatusText(job.status)}
                 </Badge>
               </td>
             </tr>
