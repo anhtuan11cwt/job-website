@@ -18,11 +18,18 @@ function Navbar() {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
 
-  const navLinks = [
+  const studentLinks = [
     { href: "/", name: "Trang chủ" },
     { href: "/jobs", name: "Việc làm" },
     { href: "/browse", name: "Tìm việc" },
   ];
+
+  const recruiterLinks = [
+    { href: "/admin/companies", name: "Công ty" },
+    { href: "/admin/jobs", name: "Công việc" },
+  ];
+
+  const navLinks = user?.role === "recruiter" ? recruiterLinks : studentLinks;
 
   const logoutHandler = async () => {
     try {
@@ -117,16 +124,18 @@ function Navbar() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 mt-2">
-                    <Button
-                      asChild
-                      className="justify-start gap-2 w-full"
-                      variant="ghost"
-                    >
-                      <Link to="/profile">
-                        <User2 className="size-4" />
-                        Xem hồ sơ
-                      </Link>
-                    </Button>
+                    {user?.role === "student" && (
+                      <Button
+                        asChild
+                        className="justify-start gap-2 w-full"
+                        variant="ghost"
+                      >
+                        <Link to="/profile">
+                          <User2 className="size-4" />
+                          Xem hồ sơ
+                        </Link>
+                      </Button>
+                    )}
                     <Button
                       className="justify-start gap-2 w-full text-destructive hover:text-destructive"
                       onClick={logoutHandler}

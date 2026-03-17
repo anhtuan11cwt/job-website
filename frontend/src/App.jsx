@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/shared/Navbar";
+import AdminJobs from "@/components/admin/AdminJobs";
+import Companies from "@/components/admin/Companies";
+import Navbar from "@/components/shared/Navbar";
 import Browse from "./pages/Browse";
 import Home from "./pages/Home";
 import JobDescription from "./pages/JobDescription";
@@ -21,6 +23,8 @@ function App() {
         <Route element={<Browse />} path="/browse" />
         <Route element={<Profile />} path="/profile" />
         <Route element={<JobDescription />} path="/description/:id" />
+        <Route element={<Companies />} path="/admin/companies" />
+        <Route element={<AdminJobs />} path="/admin/jobs" />
       </Routes>
     </div>
   );
