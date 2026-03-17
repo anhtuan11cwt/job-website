@@ -2,6 +2,7 @@ export const USER_API_END_POINT = "http://localhost:8000/api/v1/user";
 export const JOB_API_END_POINT = "http://localhost:8000/api/v1/job";
 export const APPLICATION_API_END_POINT =
   "http://localhost:8000/api/v1/application";
+export const COMPANY_API_END_POINT = "http://localhost:8000/api/v1/company";
 
 export const CATEGORIES = [
   { id: "frontend-developer", label: "Nhà phát triển Frontend" },
@@ -212,20 +213,20 @@ export const APPLIED_JOBS = [
     date: "27-12-2024",
     id: 1,
     jobRole: "Lập trình viên Front-end",
-    status: "Selected",
+    status: "Được chọn",
   },
   {
     company: "Google",
     date: "26-12-2024",
     id: 2,
     jobRole: "Lập trình viên Fullstack",
-    status: "Pending",
+    status: "Đang chờ",
   },
   {
     company: "Facebook",
     date: "25-12-2024",
     id: 3,
     jobRole: "Lập trình viên React Native",
-    status: "Rejected",
+    status: "Bị từ chối",
   },
 ];

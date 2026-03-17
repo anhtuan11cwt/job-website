@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminJobs from "@/components/admin/AdminJobs";
 import Companies from "@/components/admin/Companies";
+import CompanyCreate from "@/components/admin/CompanyCreate";
+import CompanySetup from "@/components/admin/CompanySetup";
 import Navbar from "@/components/shared/Navbar";
 import Browse from "./pages/Browse";
 import Home from "./pages/Home";
@@ -24,6 +26,8 @@ function App() {
         <Route element={<Profile />} path="/profile" />
         <Route element={<JobDescription />} path="/description/:id" />
         <Route element={<Companies />} path="/admin/companies" />
+        <Route element={<CompanyCreate />} path="/admin/companies/create" />
+        <Route element={<CompanySetup />} path="/admin/companies/:id" />
         <Route element={<AdminJobs />} path="/admin/jobs" />
       </Routes>
     </div>
